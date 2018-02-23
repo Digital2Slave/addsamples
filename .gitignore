@@ -1,2 +1,6 @@
 .DS_Store
 .idea/
+images/
+samples/
+*.log
+*.pyc
