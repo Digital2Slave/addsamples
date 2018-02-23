@@ -1,7 +1,10 @@
 ## Add samples from images
 
+Expanding samples from images.
 
 ### Structure
+
+Create folders recursively like the following structure in the root path of this project.
 
 ```
 ├── images
