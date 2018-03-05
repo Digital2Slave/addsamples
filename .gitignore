@@ -2,5 +2,6 @@
 .idea/
 images/
 samples/
+data/
 *.log
 *.pyc
