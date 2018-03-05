@@ -54,20 +54,29 @@ def preprocess_img(img_path, dst_sub_path, pfix):
         return
 
     # Rotate
-    im = Image.open(img_path)
-    rotates = range(0, 271, 90)
-    for idx, v in enumerate(rotates):
-        img_prefix = str(pfix + idx)
-        dst_im = im.rotate(v, 0, 1)
-        dst_file_path = os.path.join(dst_sub_path, img_prefix + "rotate.jpg")
-        dst_im.save(dst_file_path)
-        # Add noise
-        cvimg = cv2.imread(dst_file_path)
-        add_noise("gauss", dst_sub_path, img_prefix, cvimg)
-        add_noise("poisson", dst_sub_path, img_prefix, cvimg)
-        # add_noise("s&p", dst_sub_path, img_prefix, cvimg)
-        # add_noise("speckle", dst_sub_path, img_prefix, cvimg)
-    return pfix + len(rotates) + 4
+    # im = Image.open(img_path)
+    # rotates = range(0, 271, 90)
+    # for idx, v in enumerate(rotates):
+    #     img_prefix = str(pfix + idx)
+    #     dst_im = im.rotate(v, 0, 1)
+    #     dst_file_path = os.path.join(dst_sub_path, img_prefix + "rotate.jpg")
+    #     dst_im.save(dst_file_path)
+    #     # Add noise
+    #     cvimg = cv2.imread(dst_file_path)
+    #     add_noise("gauss", dst_sub_path, img_prefix, cvimg)
+    #     # add_noise("poisson", dst_sub_path, img_prefix, cvimg)
+    #     # add_noise("s&p", dst_sub_path, img_prefix, cvimg)
+    #     # add_noise("speckle", dst_sub_path, img_prefix, cvimg)
+    # # return pfix + len(rotates)*2
+
+    # Only add noise
+    cvimg = cv2.imread(img_path)
+    img_prefix = str(pfix)
+    dst_file_path = os.path.join(dst_sub_path, img_prefix + ".jpg")
+    cv2.imwrite(dst_file_path, cvimg)
+    add_noise("gauss", dst_sub_path, img_prefix, cvimg)
+    add_noise("s&p", dst_sub_path, img_prefix, cvimg)
+    return pfix + 3
 
 
 def main(src_path, dst_path):
@@ -118,5 +127,5 @@ def main(src_path, dst_path):
 
 if __name__ == '__main__':
     src_data_path = os.path.join(os.getcwd(), "images")
-    dst_data_path = os.path.join(os.getcwd(), "samples")
+    dst_data_path = os.path.join(os.getcwd(), "data")
     main(src_data_path, dst_data_path)
