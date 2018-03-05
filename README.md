@@ -23,11 +23,11 @@ Create folders recursively like the following structure in the root path of this
 
 ### Classes
 
-- 0 not phone
-- 1 the feature phone
-- 2 the smart phone
-- 3 the back of phone
-- 4 lighten of phone screen
+- 0 class_1
+- 1 class_2
+- 2 class_3
+- 3 class_4
+- 4 class_5
 
 
 ## Reference
