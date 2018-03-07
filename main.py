@@ -87,9 +87,13 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
         logger.error("The input path for image file is invalid.")
         return
 
-    # 0-Crop
-    img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")
-    cropit(img_src_path, img_dst_path)
+    img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")    
+    # 0-Crop if need
+    # cropit(img_src_path, img_dst_path)
+    pil_image = Image.open(img_src_path).convert('RGB')
+    src = np.array(pil_image)
+    src = src[:, :, ::-1].copy()
+    cv2.imwrite(img_dst_path, src)
 
     # 1-Rotate
     im = Image.open(img_dst_path)
