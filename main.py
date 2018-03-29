@@ -5,7 +5,7 @@ import cv2
 import sys
 import logging
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageEnhance
 from noisy import noisy
 from copy import deepcopy
 
@@ -82,6 +82,24 @@ def add_noise(noise_type, img_dst_dir, img_prefix, image):
     cv2.imwrite(save_path, noise_img)
 
 
+def adjust_brightness(img_src_path, img_dst_dir, img_prefix):
+    """
+    Adjust brightness of input image.
+    :param img_src_path: the path of input image
+    :param img_dst_dir: the root path of output image directory
+    :param img_prefix: the prefix name of input image
+    :return:
+    """
+    im = Image.open(img_src_path)
+    enhancer = ImageEnhance.Brightness(im)
+    for i in range(2, 8, 2):
+        factor = i / 4.0
+        dst = enhancer.enhance(factor)
+        if factor != 1.0:
+            save_path = os.path.join(img_dst_dir, img_prefix + "_brightenss_" + str(factor) + ".jpg")
+        dst.save(save_path)
+
+
 def preprocess_img(img_src_path, img_dst_dir, img_prefix):
     """
     Preprocess the input image file.
@@ -97,14 +115,18 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
     img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")    
     # 0-Crop if need
     # cropit(img_src_path, img_dst_path)
-    pil_image = Image.open(img_src_path).convert('RGB')
-    src = np.array(pil_image)
-    src = src[:, :, ::-1].copy()
-    cv2.imwrite(img_dst_path, src)
+
+    # pil_image = Image.open(img_src_path).convert('RGB')
+    # src = np.array(pil_image)
+    # src = src[:, :, ::-1].copy()
+    # cv2.imwrite(img_dst_path, src)
+
+    # Adjust_brightness
+    adjust_brightness(img_src_path, img_dst_dir, img_prefix)
 
     # 1-Rotate
-    im = Image.open(img_dst_path)
-    rotates = range(0, 271, 90)
+    im = Image.open(img_src_path)
+    rotates = range(0, 271, 180) # 90
     for idx, v in enumerate(rotates):
         dst_im = im.rotate(v, 0, 1)
         img_pfix = img_prefix + "_rotate_" + str(v)
