@@ -83,6 +83,13 @@ def add_noise(noise_type, img_dst_dir, img_prefix, image):
 
 
 def preprocess_img(img_src_path, img_dst_dir, img_prefix):
+    """
+    Preprocess the input image file.
+    :param img_src_path: the path of input image
+    :param img_dst_dir: the root path of output image directory
+    :param img_prefix: the prefix name of input image
+    :return:
+    """
     if not os.path.isfile(img_src_path):
         logger.error("The input path for image file is invalid.")
         return
