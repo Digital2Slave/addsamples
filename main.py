@@ -116,10 +116,14 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
     # 0-Crop if need
     # cropit(img_src_path, img_dst_path)
 
-    # pil_image = Image.open(img_src_path).convert('RGB')
-    # src = np.array(pil_image)
-    # src = src[:, :, ::-1].copy()
-    # cv2.imwrite(img_dst_path, src)
+    pil_image = Image.open(img_src_path).convert('RGB')
+    src = np.array(pil_image)
+    src = src[:, :, ::-1].copy()
+    src_rows, src_cols = np.shape(src)[:2]
+    if src_rows > src_cols:
+        src = cv2.transpose(src)
+        src = cv2.flip(src, 1)
+        cv2.imwrite(img_src_path, src)
 
     # Adjust_brightness
     adjust_brightness(img_src_path, img_dst_dir, img_prefix)
