@@ -112,7 +112,7 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
         logger.error("The input path for image file is invalid.")
         return
 
-    img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")
+    # img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")
     # 0-Crop if need
     # cropit(img_src_path, img_dst_path)
 
@@ -124,19 +124,17 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
         src = cv2.transpose(src)
         src = cv2.flip(src, 1)
     cv2.imwrite(img_src_path, src)
-    cv2.imwrite(img_dst_path, src)
-
-    # Adjust_brightness
-    adjust_brightness(img_src_path, img_dst_dir, img_prefix)
 
     # 1-Rotate
     im = Image.open(img_src_path)
-    rotates = [10, 170, -170, -10]
+    rotates = [0, 10, 170, -170, -10]
     for v in rotates:
         dst_im = im.rotate(v, 0, 1)
         img_pfix = img_prefix + "_rotate_" + str(v)
         dst_file_path = os.path.join(img_dst_dir, img_pfix + ".jpg")
         dst_im.save(dst_file_path)
+        # Adjust_brightness
+        adjust_brightness(dst_file_path, img_dst_dir, img_pfix)
         # 2-Add Noise
         # cvimg = cv2.imread(dst_file_path)
         # add_noise("gauss", img_dst_dir, img_pfix, cvimg)
