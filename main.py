@@ -29,7 +29,7 @@ logger.addHandler(console_hander)
 logger.setLevel(logging.DEBUG)
 
 ## remove file_log
-logger.removeHandler(file_handler)
+# logger.removeHandler(file_handler)
 
 
 def cropit(img_src_path, img_dst_path):
@@ -112,7 +112,7 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
         logger.error("The input path for image file is invalid.")
         return
 
-    img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")    
+    # img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")
     # 0-Crop if need
     # cropit(img_src_path, img_dst_path)
 
@@ -130,16 +130,16 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
 
     # 1-Rotate
     im = Image.open(img_src_path)
-    rotates = range(0, 271, 180) # 90
-    for idx, v in enumerate(rotates):
+    rotates = [15, 165, -165, -15]
+    for v in rotates:
         dst_im = im.rotate(v, 0, 1)
         img_pfix = img_prefix + "_rotate_" + str(v)
         dst_file_path = os.path.join(img_dst_dir, img_pfix + ".jpg")
         dst_im.save(dst_file_path)
         # 2-Add Noise
-        cvimg = cv2.imread(dst_file_path)
-        add_noise("gauss", img_dst_dir, img_pfix, cvimg)
-        add_noise("s&p", img_dst_dir, img_pfix, cvimg)
+        # cvimg = cv2.imread(dst_file_path)
+        # add_noise("gauss", img_dst_dir, img_pfix, cvimg)
+        # add_noise("s&p", img_dst_dir, img_pfix, cvimg)
 
 
 def main(src_path, dst_path):
