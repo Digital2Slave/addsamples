@@ -112,7 +112,7 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
         logger.error("The input path for image file is invalid.")
         return
 
-    # img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")
+    img_dst_path = os.path.join(img_dst_dir, img_prefix + ".jpg")
     # 0-Crop if need
     # cropit(img_src_path, img_dst_path)
 
@@ -123,14 +123,15 @@ def preprocess_img(img_src_path, img_dst_dir, img_prefix):
     if src_rows > src_cols:
         src = cv2.transpose(src)
         src = cv2.flip(src, 1)
-        cv2.imwrite(img_src_path, src)
+    cv2.imwrite(img_src_path, src)
+    cv2.imwrite(img_dst_path, src)
 
     # Adjust_brightness
     adjust_brightness(img_src_path, img_dst_dir, img_prefix)
 
     # 1-Rotate
     im = Image.open(img_src_path)
-    rotates = [15, 165, -165, -15]
+    rotates = [10, 170, -170, -10]
     for v in rotates:
         dst_im = im.rotate(v, 0, 1)
         img_pfix = img_prefix + "_rotate_" + str(v)
