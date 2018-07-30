@@ -13,7 +13,7 @@ Create folders recursively like the following structure in the root path of this
 │   ├── 2
 │   ├── 3
 │   └── 4
-└── samples
+└── data
     ├── 0
     ├── 1
     ├── 2
@@ -23,11 +23,11 @@ Create folders recursively like the following structure in the root path of this
 
 ### Classes
 
-- 0 class_1
-- 1 class_2
-- 2 class_3
-- 3 class_4
-- 4 class_5
+- 0 class_1 --> not phone
+- 1 class_2 --> feature phone
+- 2 class_3 --> smart phone
+- 3 class_4 --> background of smart phone
+- 4 class_5 --> lighten screen of smart phone
 
 
 ## Reference
